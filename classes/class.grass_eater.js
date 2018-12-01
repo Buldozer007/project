@@ -1,12 +1,17 @@
-class GrassEater {
+class GrassEater extends Parent{
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x,y,index);
         this.energy = Math.round(Math.random() * 8);
         this.multiply = Math.round(Math.random() * 8);
         this.speed = 8;
         matrix[this.y][this.x] = this.index;
+    }
+    chooseCell(ch) {
+        this.getNewCoordinates();
+        return super.chooseCell(ch);    
+    }
+
+    getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -17,21 +22,8 @@ class GrassEater {
             [this.x, this.y + 1],
             [this.x + 1, this.y + 1]
         ];
+    }
 
-    }
-    chooseCell(ch) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
-    }
     move() {
         var cell = random(this.chooseCell(0));
         if (cell && this.multiply >= this.speed / 4) {
@@ -62,7 +54,7 @@ class GrassEater {
 
     }
 
-    multiply() {
+    mult() {
         var cell = random(this.chooseCell(0));
         if (cell && this.energy >= this.speed) {
             this.energy = 1;

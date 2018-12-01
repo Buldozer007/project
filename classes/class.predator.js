@@ -1,12 +1,16 @@
-class Predator {
+class Predator extends Parent {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
-        this.index = index;
+        super(x,y,index);
         this.energy = Math.round(Math.random() * 16);
         this.speed = 24;
         this.multiply = Math.round(Math.random() * 16);
         matrix[this.y][this.x] = this.index;
+    }
+    chooseCell(ch) {
+        this.getNewCoorinates();
+        return super.chooseCell(ch);
+    }
+    getNewCoorinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -17,22 +21,7 @@ class Predator {
             [this.x, this.y + 1],
             [this.x + 1, this.y + 1]
         ];
-
     }
-    chooseCell(ch) {
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == ch) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
-    }
-
     move() {
         var cell = random(this.chooseCell(0));
         if (cell && this.multiply >= this.speed / 2) {
@@ -57,10 +46,10 @@ class Predator {
                 }
             }
         }
-        else this.sharjvel();
+        else this.move();
     }
 
-    multiply() {
+    mult() {
         var cell = random(this.chooseCell(0));
         if (cell && this.energy >= this.speed) {
             this.energy = 1;

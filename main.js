@@ -3,7 +3,7 @@ function genMatrix(w , h){
 	for (var y = 0 ; y < h ; y++) {
 		matrixInfo[y] = [];
 		for(var x = 0; x < w ;x++ ){
-			var r = Math.floor(Math.random()*100);
+			var random = Math.floor(Math.random()*100);
 			if 		(random < 20)  				  {random = 0;}
 			else if (random < 65 && random > 20 ) {random = 1;} 
 		    else if (random < 90 && random > 65 ) {random = 2;}
@@ -61,17 +61,17 @@ function draw() {
     }
 
     for(var i in grassArr) {
-        grassArr[i].multiply();
+        grassArr[i].mult();
     }
 
     for(var i in grass_eaterArr) {
-        grass_eaterArr[i].multiply();
+        grass_eaterArr[i].mult();
         grass_eaterArr[i].eat();
         grass_eaterArr[i].die();
     }
 
     for(var i in predatorArr) {
-        predatorArr[i].multiply();
+        predatorArr[i].mult();
         predatorArr[i].eat();
         predatorArr[i].die();
     }
