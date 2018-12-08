@@ -1,14 +1,33 @@
+var express = require("express");
+var app = express();
+var Grass = require('./classes/class.grass');
+var GrassEater = require('./classes/class.grass_eater');
+var Predator = require('./classes/class.predator');
+var Hunter = require('./classes/class.hunter');
+
+app.use(express.static("public"));
+
+app.get("/", function(req, res){
+   res.redirect("public");
+});
+
+app.listen(3000, function(){
+   console.log("Example is running on port 3000");
+});
+
+
+
 function genMatrix(w, h) {
     var matrixInfo = [];
     for (var y = 0; y < h; y++) {
         matrixInfo[y] = [];
         for (var x = 0; x < w; x++) {
-            var random = Math.floor(Math.random() * 105);
+            var random = Math.floor(Math.random() * 102);
             if (random < 20) { random = 0; }
-            else if (random < 65 && random > 20) { random = 1; }
-            else if (random < 90 && random > 65) { random = 2; }
-            else if (random < 100 && random > 90) { random = 3; }
-            else if (random < 105 && random > 100) { random = 4; }
+            else if (random < 65  ) { random = 1; }
+            else if (random < 90 ) { random = 2; }
+            else if (random < 101 ) { random = 3; }
+            else if (random < 102 ) { random = 4; }
             matrixInfo[y][x] = random;
         }
     }
@@ -25,7 +44,7 @@ function setup() {
     matrix = genMatrix(w, h);
     createCanvas(side * w, side * h);
     background("#acacac");
-    frameRate(1);
+    frameRate(5);
     for (var y in matrix) {
         for (var x in matrix[y]) {
             if (matrix[y][x] == 1) {
@@ -37,7 +56,7 @@ function setup() {
             else if (matrix[y][x] == 3) {
                 predatorArr.push(new Predator(x * 1, y * 1, 3));
             }
-            else {
+            else if (matrix[y][x] == 4) {
                 hunterArr.push(new Hunter(x * 1, y * 1, 4));
             }
         }
@@ -89,5 +108,4 @@ function draw() {
         hunterArr[i].kill();
         hunterArr[i].die();
     }
-
 }
