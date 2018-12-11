@@ -6,7 +6,7 @@ module.exports = class Predator extends Parent {
                         this.energy = Math.round(Math.random() * 16);
                         this.speed = 24;
                         this.multiply = Math.round(Math.random() * 16);
-                        matrix[this.y][this.x] = this.index;
+                       // matrix[this.y][this.x] = this.index;
                     }
                     chooseCell(ch) {
                         this.getNewCoorinates();
