@@ -2,6 +2,8 @@ var express = require("express");
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+
+
 var Grass = require('./classes/class.grass');
 var GrassEater = require('./classes/class.grass_eater');
 var Predator = require('./classes/class.predator');
@@ -14,7 +16,7 @@ app.get("/", function(req, res){
    res.redirect("public");
 });
 
-app.listen(3000, function(){
+server.listen(3000, function(){
    console.log("Example is running on port 3000");
 });
 
@@ -86,9 +88,9 @@ function drawInServer() {
         hunterArr[i].die();
     }
     io.sockets.emit('draw matrix',matrix)
-}
+} 
 
 
-io.on('connection' , function(socket){
+io.on('connection' , function (socket){
     setInterval(drawInServer , 200);
 })

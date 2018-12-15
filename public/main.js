@@ -1,18 +1,16 @@
-
-function main() {
+//function main() {
     var side = 24;
+    var w = 30;
+    var h = 30;
     var socket = io();
-    var w, h = 30
 
     function setup() {
-        //matrix = genMatrix(w, h);
+        frameRate(5);
         createCanvas(side * w, side * h);
         background("#acacac");
     }
 
-
     function drawMatrix(matrix) {
-        background("#acacac");
         for (var y in matrix) {
             for (var x in matrix[y]) {
                 if (matrix[y][x] == 0) {
@@ -36,6 +34,6 @@ function main() {
     }
 
     socket.on('draw  matrix', drawMatrix);
-}
+//}
 
-window.onload = main;
+//window.onload = main;
