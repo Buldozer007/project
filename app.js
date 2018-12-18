@@ -12,12 +12,12 @@ var Hunter = require('./classes/class.hunter');
 app.use(express.static("public"));
 app.use(express.static("."));
 
-app.get("/", function(req, res){
-   res.redirect("public");
+app.get("/", function (req, res) {
+    res.redirect("public");
 });
 
-server.listen(3000, function(){
-   console.log("Example is running on port 3000");
+server.listen(3000, function () {
+    console.log("Example is running on port 3000");
 });
 
 
@@ -29,10 +29,10 @@ function genMatrix(w, h) {
         for (var x = 0; x < w; x++) {
             var random = Math.floor(Math.random() * 102);
             if (random < 20) { random = 0; }
-            else if (random < 65  ) { random = 1; }
-            else if (random < 90 ) { random = 2; }
-            else if (random < 101 ) { random = 3; }
-            else if (random < 102 ) { random = 4; }
+            else if (random < 65) { random = 1; }
+            else if (random < 90) { random = 2; }
+            else if (random < 101) { random = 3; }
+            else if (random < 102) { random = 4; }
             matrixInfo[y][x] = random;
         }
     }
@@ -42,7 +42,8 @@ function genMatrix(w, h) {
 matrix = [];
 w = 30;
 h = 30;
-grassArr = [] , grass_eaterArr = [], predatorArr = [], hunterArr = [];
+grassArr = [], grass_eaterArr = [], predatorArr = [], hunterArr = [];
+currentSeason = "Winter";
 
 
 matrix = genMatrix(w, h);
@@ -87,10 +88,30 @@ function drawInServer() {
         hunterArr[i].kill();
         hunterArr[i].die();
     }
-    io.sockets.emit('draw matrix',matrix)
-} 
+    io.sockets.emit('draw matrix', matrix)
+    //console.log(matrix);
+}
+function changeSeason(){
+    if(currentSeason == "Winter"){
+        currentSeason  = "Spring";
+    }
+    else if(currentSeason == "Spring"){
+        currentSeason  = "Summer";
+    }
+    else if(currentSeason == "Summer"){
+        currentSeason = "Fall";
+    }
+    else if(currentSeason == "Fall"){
+        currentSeason  = "Winter";
+    }
+    io.sockets.emit('change season' , currentSeason);
+}
 
-
-io.on('connection' , function (socket){
-    setInterval(drawInServer , 200);
+var firstClient = false;
+io.on('connection', function (socket) {
+    if (!firstClient ) {
+        setInterval(drawInServer, 500);
+        setInterval(changeSeason , 1500);
+        firstClient = true;
+    }
 })
