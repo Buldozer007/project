@@ -3,7 +3,6 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-
 var Grass = require('./classes/class.grass');
 var GrassEater = require('./classes/class.grass_eater');
 var Predator = require('./classes/class.predator');
@@ -28,11 +27,11 @@ function genMatrix(w, h) {
         matrixInfo[y] = [];
         for (var x = 0; x < w; x++) {
             var random = Math.floor(Math.random() * 102);
-            if (random < 20) { random = 0; }
-            else if (random < 65) { random = 1; }
-            else if (random < 90) { random = 2; }
-            else if (random < 101) { random = 3; }
-            else if (random < 102) { random = 4; }
+            if (random < 20) random = 0;
+            else if (random < 65) random = 1;
+            else if (random < 90) random = 2;
+            else if (random < 101) random = 3;
+            else if (random < 102) random = 4;
             matrixInfo[y][x] = random;
         }
     }
