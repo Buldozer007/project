@@ -66,23 +66,25 @@ for (var y in matrix) {
 
 function drawInServer() {
     for (var i in grassArr) {
-        grassArr[i].mult();
+        if (currentSeason != "Winter") grassArr[i].mult();
     }
 
     for (var i in grass_eaterArr) {
-        grass_eaterArr[i].mult();
-        grass_eaterArr[i].eat();
+        if (currentSeason != "Winter" || "Fall") {
+            grass_eaterArr[i].mult();
+            grass_eaterArr[i].eat();
+        }
         grass_eaterArr[i].die();
     }
 
     for (var i in predatorArr) {
-        predatorArr[i].mult();
+        if (currentSeason != "Winter" || "Fall") predatorArr[i].mult();
         predatorArr[i].eat();
         predatorArr[i].die();
     }
 
     for (var i in hunterArr) {
-        hunterArr[i].move();
+        if (currentSeason != "Winter") hunterArr[i].move();
         hunterArr[i].eat();
         hunterArr[i].kill();
         hunterArr[i].die();
@@ -90,27 +92,27 @@ function drawInServer() {
     io.sockets.emit('draw matrix', matrix)
     //console.log(matrix);
 }
-function changeSeason(){
-    if(currentSeason == "Winter"){
-        currentSeason  = "Spring";
+function changeSeason() {
+    if (currentSeason == "Winter") {
+        currentSeason = "Spring";
     }
-    else if(currentSeason == "Spring"){
-        currentSeason  = "Summer";
+    else if (currentSeason == "Spring") {
+        currentSeason = "Summer";
     }
-    else if(currentSeason == "Summer"){
+    else if (currentSeason == "Summer") {
         currentSeason = "Fall";
     }
-    else if(currentSeason == "Fall"){
-        currentSeason  = "Winter";
+    else if (currentSeason == "Fall") {
+        currentSeason = "Winter";
     }
-    io.sockets.emit('change season' , currentSeason);
+    io.sockets.emit('change season', currentSeason);
 }
 
 var firstClient = false;
 io.on('connection', function (socket) {
-    if (!firstClient ) {
+    if (!firstClient) {
         setInterval(drawInServer, 500);
-        setInterval(changeSeason , 1500);
+        setInterval(changeSeason, 1500);
         firstClient = true;
     }
 })

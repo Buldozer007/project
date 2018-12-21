@@ -9,17 +9,16 @@ function setup() {
     createCanvas(side * w, side * h);
     background("#acacac");
 }
+
 function getSeason(currentSeason){
     document.getElementById('season').textContent = currentSeason;
     season = currentSeason;
 }
 
-
 function drawMatrix(matrix) {
     for (var y in matrix) {
         for (var x in matrix[y]) {
             if (matrix[y][x] == 0) {
-
                 season == "Winter" ? fill('powderblue') : fill("#acacac");
             }
             else if (matrix[y][x] == 1) {
