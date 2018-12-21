@@ -14,6 +14,9 @@ app.use(express.static("."));
 app.get("/", function (req, res) {
     res.redirect("public");
 });
+app.get("/stats" , function(req,res){
+    res.redirect("stats.json")
+})
 
 server.listen(3000, function () {
     console.log("Example is running on port 3000");
@@ -62,7 +65,6 @@ for (var y in matrix) {
         }
     }
 }
-
 
 function drawInServer() {
     for (var i in grassArr) {
