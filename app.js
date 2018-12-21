@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var fs = require('fs');
 
 var Grass = require('./classes/class.grass');
 var GrassEater = require('./classes/class.grass_eater');
@@ -15,7 +16,7 @@ app.get("/", function (req, res) {
     res.redirect("public");
 });
 app.get("/stats" , function(req,res){
-    res.redirect("stats.json")
+    res.send(fs.readFileSync('stats.json').toString().replace(/,|{|}/g , '<br>') + "<br> <a href='/'>Click here to go back</a>");
 })
 
 server.listen(3000, function () {
@@ -118,3 +119,36 @@ io.on('connection', function (socket) {
         firstClient = true;
     }
 })
+
+//STATISTICS
+
+
+var grassInfo = {
+    'name' : 'grass',
+    'grass-quantity': grassArr.length
+}
+
+var grass_eaterInfo = {
+    'name':'grass_eater',
+    'grass_eater-quantity':grass_eaterArr.length
+}
+
+var predatorInfo = {
+    'name':'predator',
+    'predator-quantity':predatorArr.length
+}
+
+var hunterInfo = {
+    'name':'hunter',
+    'hunter-quantity':hunterArr.length
+}
+
+var grassString = JSON.stringify(grassInfo , null ,4 );
+var grass_eaterString = JSON.stringify(grass_eaterInfo , null , 4);
+var predatorString = JSON.stringify(predatorInfo , null , 4);
+var hunterString = JSON.stringify(hunterInfo ,null ,4 );
+
+fs.writeFileSync('stats.json' ,    grassString + '\n' 
+                                 + grass_eaterString + '\n' 
+                                 + predatorString + '\n' 
+                                 + hunterString + '\n');
