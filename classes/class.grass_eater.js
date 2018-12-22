@@ -14,7 +14,7 @@ module.exports = class GrassEater extends Parent {
                     }
 
                     getNewCoordinates() {
-                       super.getNewCoorinates();
+                       super.getNewCoordinates();
                     }
 
                     move() {
@@ -40,6 +40,7 @@ module.exports = class GrassEater extends Parent {
                             for (var i in grassArr) {
                                 if (grassArr[i].x == this.x && grassArr[i].y == this.y) {
                                     grassArr.splice(i, 1);
+                                    break;
                                 }
                             }
                         }
@@ -62,6 +63,8 @@ module.exports = class GrassEater extends Parent {
                             for (var i in grass_eaterArr) {
                                 if (grass_eaterArr[i].x == this.x && grass_eaterArr[i].y == this.y) {
                                     grass_eaterArr.splice(i, 1);
+                                    /*Here ---->*/diedGrass_eaters++;
+                                    break;
                                 }
                             }
                         }

@@ -9,11 +9,11 @@ module.exports = class Predator extends Parent {
                        // matrix[this.y][this.x] = this.index;
                     }
                     chooseCell(ch) {
-                        this.getNewCoorinates();
+                        this.getNewCoordinates();
                         return super.chooseCell(ch);
                     }
-                    getNewCoorinates() {
-                        super.getNewCoorinates();
+                    getNewCoordinates() {
+                        super.getNewCoordinates();
                     }
                     move() {
                         var cell = this.chooseCell(0)[Math.floor(Math.random() * this.chooseCell(0).length)];
@@ -36,6 +36,8 @@ module.exports = class Predator extends Parent {
                             for (var i in grass_eaterArr) {
                                 if (grass_eaterArr[i].x == this.x && grass_eaterArr[i].y == this.y) {
                                     grass_eaterArr.splice(i, 1);
+                                    /*Here ---->*/killedGrass_eaters++;
+                                    break;
                                 }
                             }
                         }
@@ -57,6 +59,7 @@ module.exports = class Predator extends Parent {
                             for (var i in predatorArr) {
                                 if (predatorArr[i].x == this.x && predatorArr[i].y == this.y) {
                                     predatorArr.splice(i, 1);
+                                    break;
                                 }
                             }
                         }

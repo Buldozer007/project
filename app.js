@@ -15,8 +15,8 @@ app.use(express.static("."));
 app.get("/", function (req, res) {
     res.redirect("public");
 });
-app.get("/stats" , function(req,res){
-    res.send(fs.readFileSync('stats.json').toString().replace(/,|{|}/g , '<br>') + "<br> <a href='/'>Click here to go back</a>");
+app.get("/stats", function (req, res) {
+    res.send(fs.readFileSync('stats.json').toString().replace(/,|{|}/g, '<br>') + "<br> <a href='/'>Click here to go back</a>");
 })
 
 server.listen(3000, function () {
@@ -76,7 +76,7 @@ function drawInServer() {
         if (currentSeason != "Winter" || "Fall") {
             grass_eaterArr[i].mult();
             grass_eaterArr[i].eat();
-        }
+        }                                                                          
         grass_eaterArr[i].die();
     }
 
@@ -122,33 +122,41 @@ io.on('connection', function (socket) {
 
 //STATISTICS
 
+//See class.grass_eater.js : 65
+//See class.predator.js : 39
+//See class.hunter.js : 41
 
-var grassInfo = {
-    'name' : 'grass',
-    'grass-quantity': grassArr.length
+
+diedGrass_eaters = 0;
+killedGrass_eaters = 0;
+
+
+
+function statistics() {
+    var info = {
+        "grassInfo": {
+            'name': 'grass',
+            'grass-quantity': grassArr.length,
+        },
+        "grass_eaterInfo" :{
+            'name': 'grass_eater',
+            'grass_eater-quantity': grass_eaterArr.length,
+            'grass_eaters-that-were-died': diedGrass_eaters,
+            'grass_eaters-that-were-killed': killedGrass_eaters
+        },
+        "predatorInfo":{
+            'name': 'predator',
+            'predator-quantity': predatorArr.length
+        },
+        "hunterInfo" :{
+            'name': 'hunter',
+            'hunter-quantity': hunterArr.length
+        }
+    };
+    var infoString = JSON.stringify(info, null, 4);
+
+    fs.writeFileSync('stats.json', infoString);
+    console.log(diedGrass_eaters , killedGrass_eaters);
 }
 
-var grass_eaterInfo = {
-    'name':'grass_eater',
-    'grass_eater-quantity':grass_eaterArr.length
-}
-
-var predatorInfo = {
-    'name':'predator',
-    'predator-quantity':predatorArr.length
-}
-
-var hunterInfo = {
-    'name':'hunter',
-    'hunter-quantity':hunterArr.length
-}
-
-var grassString = JSON.stringify(grassInfo , null ,4 );
-var grass_eaterString = JSON.stringify(grass_eaterInfo , null , 4);
-var predatorString = JSON.stringify(predatorInfo , null , 4);
-var hunterString = JSON.stringify(hunterInfo ,null ,4 );
-
-fs.writeFileSync('stats.json' ,    grassString + '\n' 
-                                 + grass_eaterString + '\n' 
-                                 + predatorString + '\n' 
-                                 + hunterString + '\n');
+setInterval(statistics , 5000);

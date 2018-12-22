@@ -15,7 +15,7 @@ module.exports =class Parent {
                         ];
 
                     }
-                    getNewCoorinates() {
+                    getNewCoordinates() {
                         this.directions = [
                             [this.x - 1, this.y - 1],
                             [this.x, this.y - 1],
