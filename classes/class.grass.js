@@ -5,8 +5,6 @@ module.exports = class Grass extends Parent {
                         super(x, y, index)
                         this.multiply = Math.round(Math.random() * 8);
                         this.speed = 8;
-                        //matrix[this.y][this.x] = this.index;
-
                     }
                     chooseCell(ch) {
                         return super.chooseCell(ch);

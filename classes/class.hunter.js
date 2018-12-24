@@ -6,7 +6,6 @@ module.exports = class Hunter extends Parent {
                         this.stamina = 6;
                         this.bullets = 8;
                         this.food = 9;
-                        //matrix[this.x][this.y] = this.index;
                     }
                     chooseCell(ch) {
                         this.getNewCoordinates();

@@ -16,7 +16,7 @@ app.get("/", function (req, res) {
     res.redirect("public");
 });
 app.get("/stats", function (req, res) {
-    res.send(fs.readFileSync('stats.json').toString().replace(/,|{|}/g, '<br>') + "<br> <a href='/'>Click here to go back</a>");
+    res.send(fs.readFileSync('stats.json').toString().replace(/,|{|}/g , '<br>') + "<br> <a href='/'>Click here to go back</a>");
 })
 
 server.listen(3000, function () {
@@ -93,8 +93,8 @@ function drawInServer() {
         hunterArr[i].die();
     }
     io.sockets.emit('draw matrix', matrix)
-    //console.log(matrix);
 }
+
 function changeSeason() {
     if (currentSeason == "Winter") {
         currentSeason = "Spring";
@@ -122,14 +122,12 @@ io.on('connection', function (socket) {
 
 //STATISTICS
 
-//See class.grass_eater.js : 65
-//See class.predator.js : 39
-//See class.hunter.js : 41
-
-
 diedGrass_eaters = 0;
 killedGrass_eaters = 0;
 
+//See class.grass_eater.js : 65
+//See class.predator.js : 39
+//See class.hunter.js : 41
 
 
 function statistics() {
@@ -153,10 +151,10 @@ function statistics() {
             'hunter-quantity': hunterArr.length
         }
     };
+
     var infoString = JSON.stringify(info, null, 4);
 
     fs.writeFileSync('stats.json', infoString);
-    console.log(diedGrass_eaters , killedGrass_eaters);
 }
 
 setInterval(statistics , 5000);

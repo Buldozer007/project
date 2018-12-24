@@ -6,7 +6,6 @@ module.exports = class GrassEater extends Parent {
                         this.energy = Math.round(Math.random() * 8);
                         this.multiply = Math.round(Math.random() * 8);
                         this.speed = 8;
-                        //matrix[this.y][this.x] = this.index;
                     }
                     chooseCell(ch) {
                         this.getNewCoordinates();

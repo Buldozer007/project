@@ -2,7 +2,6 @@ var side = 24;
 var w = 30;
 var h = 30;
 var socket = io();
-//var indicator = document.getElementById('season');
 var season;
 
 function setup() {
